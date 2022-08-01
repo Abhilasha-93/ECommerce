@@ -31,7 +31,7 @@ exports.createCart = async function (req, res)  {
             return res.status(400).send({ status: false, message: "Invalid userId ID" })
 
         //getting token from req in auth    
-        const tokenUserId = req.decodeToken.userId;
+        // const tokenUserId = req.decodeToken.userId;
         let { productId, cartId, quantity } = data
         if (isEmpty(productId))
             return res.status(400).send({ status: false, message: "product required" })
@@ -62,8 +62,8 @@ exports.createCart = async function (req, res)  {
         }
 
         // user authorization    
-        if (validUser._id.toString() !== tokenUserId)
-            return res.status(403).send({ status: false, message: "Unauthorized access" });
+        // if (validUser._id.toString() !== tokenUserId)
+        //     return res.status(403).send({ status: false, message: "Unauthorized access" });
 
         //searching for product    
         let validProduct = await productModel.findOne({ _id: productId, isDeleted: false })
