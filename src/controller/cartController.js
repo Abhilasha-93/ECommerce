@@ -6,7 +6,7 @@ const cartModel = require('../model/cartModel');
 
 
 
-// ------------------------------------------Create Cart Api
+//Create Cart Api
 
 exports.createCart = async function (req, res) {
     try {
@@ -21,12 +21,6 @@ exports.createCart = async function (req, res) {
         if (!validate.isValidObjectId(userId))
             return res.status(400).send({ status: false, message: "Invalid userId ID" })
 
-<<<<<<< HEAD
-        //getting token from req in auth    
-        // const tokenUserId = req.decodeToken.userId;
-=======
-
->>>>>>> 403f9a8574737c5103277e61e4d4b20289678112
         let { productId, cartId, quantity } = data
         if (validate.isValid(productId))
             return res.status(400).send({ status: false, message: "Product Id is required" })
@@ -35,9 +29,9 @@ exports.createCart = async function (req, res) {
             quantity = 1
         }
         quantity = Number(quantity)
-        if (typeof quantity !== 'number')
-            return res.status(400).send({ status: false, message: "Quantity is number" })
-        if (quantity < 1)
+        if (typeof quantity !== 'number'|| isNaN(quantity))
+            return res.status(400).send({ status: false, message: "Quantity shoud be in number only" })
+        if (quantity <= 0)
             return res.status(400).send({ status: false, message: "Quantity cannot be less then 1" })
         if (!validate.isValidObjectId(productId))
             return res.status(400).send({ status: false, message: "Invalid product ID" })
@@ -52,17 +46,11 @@ exports.createCart = async function (req, res) {
 
         if (cartId) {
             var findCart = await cartModel.findOne({ _id: cartId })
+            
             if (!findCart)
                 return res.status(404).send({ status: false, message: "Cart does not exists" })
         }
 
-<<<<<<< HEAD
-        // user authorization    
-        // if (validUser._id.toString() !== tokenUserId)
-        //     return res.status(403).send({ status: false, message: "Unauthorized access" });
-=======
-
->>>>>>> 403f9a8574737c5103277e61e4d4b20289678112
 
         //searching for product    
         let validProduct = await productModel.findOne({ _id: productId, isDeleted: false })
@@ -75,7 +63,7 @@ exports.createCart = async function (req, res) {
         if (validCart) {
             if (cartId) {
                 if (validCart._id.toString() != cartId)
-                    return res.status(403).send({ status: false, message: `Cart does not belong to ${validUser.fname} ${validUser.lname}` })
+                    return res.status(403).send({ status: false, message: `Cart does not belong to you ${validUser.fname} ${validUser.lname}` })
             }
             let productidincart = validCart.items
             let uptotal = validCart.totalPrice + (validProduct.price * Number(quantity))
