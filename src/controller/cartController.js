@@ -195,7 +195,6 @@ exports.updateCart = async (req, res) => {
         if (data.removeProduct == 0) {
 
             cart.totalPrice = (cart.totalPrice - (findProduct.price * cart.items[index].quantity)).toFixed(2)
-            //cart.totalPrice.tofixed(2)
             cart.items.splice(index, 1)
             cart.totalItems = cart.items.length
             cart.save()
@@ -212,7 +211,7 @@ exports.updateCart = async (req, res) => {
             cart.totalItems = cart.items.length
             cart.save()
         }
-        return res.status(200).send({ status: true, message: "Data updated successfuly", data: cart })
+        return res.status(200).send({ status: true, message: "Success", data: cart })
 
     } catch (error) {
         return res.status(500).send({ status: false, message: error.message })
