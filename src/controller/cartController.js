@@ -25,6 +25,8 @@ exports.createCart = async (req, res) => {
         if (validate.isValid(productId))
             return res.status(400).send({ status: false, message: "Product Id is required" })
 
+
+          // Validation in case user sending data in JSON Body
         if(quantity < 1 && typeof quantity == "number"){
             return res.status(400).send({status: false, message: "Value should not be less than 1"})
         }
@@ -32,7 +34,7 @@ exports.createCart = async (req, res) => {
         if (!quantity) {
             quantity = 1
         }
-        quantity = Number(quantity)
+        quantity = Number(quantity) //In case of form data we are type casting to Number(quantity)
         if (quantity && typeof quantity != "number" || isNaN(quantity))
             return res.status(400).send({ status: false, message: "Quantity should be number" })
 
@@ -190,7 +192,7 @@ exports.updateCart = async (req, res) => {
             return res.status(400).send({ status: false, message: "Product is not present in cart" })
         }
 
-        let index = cart.items.indexOf(productArr[0]);
+        let index = cart.items.indexOf(productArr[0])
 
         if (data.removeProduct == 0) {
 
