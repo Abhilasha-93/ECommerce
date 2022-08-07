@@ -53,7 +53,7 @@ const orderSchema = new mongoose.Schema({
         type: Date
     },
     isDeleted: {
-        tepe: Boolean,
+        type: Boolean,
         default: false
     },
 },{timestamps:true})
