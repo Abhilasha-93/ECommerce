@@ -172,13 +172,13 @@ exports.getProduct = async (req, res) => {
                 if (priceSort) {
                     if (!validate.isValid(priceSort)) {
                         if (!(priceSort == 1 || priceSort == -1))
-                            return res.status(400).send({ status: false, message: "Price short value should be 1 or -1 only" })
+                            return res.status(400).send({ status: false, message: "Price sort value should be 1 or -1 only" })
                     }
                 }
             }
 
-            //.collation is used to check substrings --- locale : en = english lang and will neglect pronunciation of words
-            let product = await productModel.find(filter).sort({ price: priceSort }).collation({ locale: "en", strength: 1 }); //to make case insensitive Indexes
+            
+            let product = await productModel.find(filter).sort({ price: priceSort }).collation({ locale: "en", strength: 1 }); //collation query perform string comparisions without regard for case
             if (product.length === 0) return res.status(404).send({ status: false, message: "No products found" })
             return res.status(200).send({ status: true, message: 'Success', data: product })
 

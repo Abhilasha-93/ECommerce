@@ -257,10 +257,10 @@ exports.updateUser = async (req, res) => {
         }
 
         if (typeof lname == 'string') {
-            //checking for firstname
+            //checking for lastname
             if (validate.isValid(lname)) return res.status(400).send({ status: false, message: "Last name should not be an empty string" });
 
-            //validating firstname
+            //validating lastname
             if (validate.isValidString(lname)) return res.status(400).send({ status: false, message: "Enter a valid Last name and should not contains numbers" });
         }
 
